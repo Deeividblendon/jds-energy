@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR" data-local>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E1D2C">
+<meta name="apple-mobile-web-app-title" content="JDS Energy">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>JDS Energy Orçamentos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap">
+<style>
+/* Layout: barra navy da marca (topo no celular, lateral no PC), conteúdo em listas com fios; amarelo só na ação principal e no marcador de preço. */
+:root{
+  --navy:#0E1D2C; --navy2:#1B3145; --on-navy:#F4F7F9; --on-navy-mut:#9DB1C2; --volt:#FFCB0D; --on-volt:#0E1D2C;
+  --bg:#EDF1F4; --surface:#FFFFFF; --sunk:#F5F8FA; --fg:#0E1D2C; --mut:#526373; --line:#D5DEE6; --link:#0A5A91;
+  --ok:#15703F; --ok-bg:#DDF1E5; --warn:#8A5200; --warn-bg:#FCEBCB; --bad:#AD2A20; --bad-bg:#FBE1DE; --info:#0A5A91; --info-bg:#DCECF7; --neu-bg:#E1E8EE;
+  --display:"Montserrat","Segoe UI",Arial,sans-serif; --body:"Barlow","Segoe UI",Roboto,Arial,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08131D; --surface:#102231; --sunk:#0C1B28; --fg:#E9F0F5; --mut:#9AAEBF; --line:#24394B; --link:#7CC3F2;
+  --ok:#6FD49B; --ok-bg:#12372A; --warn:#F3C069; --warn-bg:#3B2C10; --bad:#FF9D93; --bad-bg:#43201E; --info:#7CC3F2; --info-bg:#12324A; --neu-bg:#21384B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#08131D; --surface:#102231; --sunk:#0C1B28; --fg:#E9F0F5; --mut:#9AAEBF; --line:#24394B; --link:#7CC3F2;
+  --ok:#6FD49B; --ok-bg:#12372A; --warn:#F3C069; --warn-bg:#3B2C10; --bad:#FF9D93; --bad-bg:#43201E; --info:#7CC3F2; --info-bg:#12324A; --neu-bg:#21384B; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:400 16px/1.45 var(--body);font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--navy)}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.2}
+h1{font-size:1.5rem;font-weight:800} h2{font-size:1.05rem;font-weight:700} h3{font-size:.95rem;font-weight:700}
+p{margin:0} button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+/* estrutura */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--navy);color:var(--on-navy);display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top img{height:44px;display:block}
+.nav{position:fixed;inset:auto 0 0;z-index:9;background:var(--navy);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.nav a{color:var(--on-navy-mut);text-decoration:none;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.75rem;padding:9px 2px 8px;border-top:3px solid transparent}
+.nav svg{width:22px;height:22px;flex:none}
+.nav a[aria-current]{color:var(--volt);border-top-color:var(--volt)}
+.nav .so-pc{display:none}
+main{padding-block:20px 110px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1000px;margin:0 auto;display:grid;gap:20px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){
+  .top{display:none}
+  .nav{inset:0 auto 0 0;width:216px;display:flex;flex-direction:column;gap:2px;padding:20px 12px}
+  .nav::before{content:"";flex:none;display:block;height:112px;margin-bottom:14px;background:url(logo.png) center/170px auto no-repeat}
+  .nav a{flex-direction:row;gap:12px;font-size:1rem;padding:11px 12px;border-top:0;border-radius:8px}
+  .nav a:hover{background:var(--navy2);color:var(--on-navy)}
+  .nav a[aria-current]{background:var(--volt);color:var(--on-volt)}
+  .nav .so-pc{display:flex}.nav .so-cel{display:none}
+  body{padding-left:216px}
+  main{padding-left:32px;padding-right:32px;padding-block:32px 60px}
+}
+.cab{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.cab p{color:var(--mut)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-weight:600;cursor:pointer;text-decoration:none;text-align:center}
+.btn:hover{border-color:var(--mut)}
+.btn.pri{background:var(--volt);border-color:var(--volt);color:var(--on-volt)}
+.btn.pri:hover{filter:brightness(.95)}
+.btn.per{color:var(--bad)} .btn.min{min-height:36px;padding:4px 12px;font-size:.92rem}
+.btn[disabled]{opacity:.5;cursor:default}
+.acoes{display:flex;flex-wrap:wrap;gap:8px}
+.bloco{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+.lista{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.lin{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:13px 16px;border:0;border-bottom:1px solid var(--line);color:inherit;text-decoration:none;width:100%;text-align:left;background:none}
+.lin:last-child{border-bottom:0} a.lin:hover,button.lin:hover{background:var(--sunk);cursor:pointer}
+.lin>div{min-width:0} .lin b{font-weight:600;overflow-wrap:anywhere} .lin small,.mut{color:var(--mut);font-size:.92rem}
+.lin small{display:block}
+.lin>.dir{text-align:right;flex:none;display:grid;gap:4px;justify-items:end}
+.val{font-weight:700;white-space:nowrap}
+.chip{display:inline-block;font-size:.82rem;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--neu-bg);color:var(--fg);white-space:nowrap}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.warn{background:var(--warn-bg);color:var(--warn)}.chip.bad{background:var(--bad-bg);color:var(--bad)}.chip.info{background:var(--info-bg);color:var(--info)}
+.filtros{display:flex;gap:6px;overflow-x:auto;padding:3px 3px 6px}
+.filtros button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:7px 14px;font-weight:600;cursor:pointer}
+.filtros button[aria-pressed=true]{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));background:var(--navy);color:var(--on-navy);border:1px solid var(--navy2);border-radius:var(--r);overflow:hidden}
+.nums div{padding:16px 18px;display:grid;gap:2px} .nums span{color:var(--on-navy-mut);font-size:.92rem} .nums b{font:800 1.45rem/1.2 var(--display);white-space:nowrap} .nums div:first-child b{color:var(--volt)}
+@media (max-width:899px){.cab .pc{display:none}}
+@media (max-width:560px){.nums{grid-template-columns:1fr 1fr}.nums div:first-child{grid-column:1/-1;padding-bottom:4px}.nums div:first-child b{font-size:1.9rem}}
+.vazio{padding:28px 20px;text-align:center;color:var(--mut);display:grid;gap:12px;justify-items:center}
+.aviso{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.aviso.bad{background:var(--bad-bg);color:var(--bad)}
+/* formulários */
+.campo{display:grid;gap:4px;min-width:0;grid-template-columns:minmax(0,1fr);align-content:start} .campo>span{font-weight:600;font-size:.92rem;color:var(--mut)}
+input:not([type=range],[type=checkbox],[type=file]),select,textarea{width:100%;min-height:44px;border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:8px 12px}
+textarea{min-height:84px;resize:vertical}
+.g2,.g3{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}.g3{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.check{display:flex;gap:10px;align-items:center;min-height:36px} .check input{width:20px;height:20px;accent-color:var(--link);flex:none}
+/* régua de faixa de preço */
+.regua{display:grid;gap:8px}
+.regua .tr{position:relative;height:8px;border-radius:4px;background:var(--neu-bg)}
+.regua .tr i{position:absolute;top:-4px;width:5px;height:16px;border-radius:2px;background:var(--volt);box-shadow:0 0 0 1.5px var(--navy);transform:translateX(-50%)}
+.regua .esc{display:flex;justify-content:space-between;font-size:.88rem;color:var(--mut)}
+.regua .esc b{color:var(--fg)}
+input[type=range]{width:100%;accent-color:var(--volt);margin:0;height:28px}
+.item{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:8px;grid-template-columns:minmax(0,1fr)}
+.item:first-child{border-top:0;padding-top:0}
+.item .cb{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.item .ctl{display:grid;grid-template-columns:84px minmax(0,130px) 1fr;gap:10px;align-items:end}
+.item .ctl .val{padding-bottom:11px;text-align:right}
+.x{border:0;background:none;color:var(--mut);font-size:1.3rem;line-height:1;width:36px;height:36px;cursor:pointer;flex:none;border-radius:8px}.x:hover{background:var(--bad-bg);color:var(--bad)}
+.tot{display:grid;gap:6px}.tot div{display:flex;justify-content:space-between;gap:12px}.tot .fim{border-top:2px solid var(--fg);padding-top:8px;font:800 1.25rem var(--display)}
+.rodape{position:sticky;bottom:calc(72px + env(safe-area-inset-bottom,0px));background:var(--navy);color:var(--on-navy);border:1px solid var(--navy2);border-radius:var(--r);padding:10px 12px 10px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:5}
+.rodape small{color:var(--on-navy-mut);display:block}.rodape b{font:800 1.2rem var(--display);white-space:nowrap}
+@media (min-width:900px){.rodape{bottom:16px}}
+.sv{display:grid;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);grid-template-columns:minmax(0,1fr)}.sv:last-child{border-bottom:0}
+.sv .cb{display:flex;flex-wrap:wrap;gap:8px 12px;justify-content:space-between;align-items:center}.sv .cb>div:first-child{min-width:0;flex:1 1 220px}
+.cat{background:var(--navy);color:var(--on-navy);padding:9px 16px;font:700 .95rem var(--display)}
+table{border-collapse:collapse;width:100%}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:.88rem;color:var(--mut)}td.n,th.n{text-align:right;white-space:nowrap}.rolar{overflow-x:auto}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}.kv div span{display:block;color:var(--mut);font-size:.9rem}.kv div b{font-weight:600;overflow-wrap:anywhere}
+.res{background:var(--navy);color:var(--on-navy);border:1px solid var(--navy2);border-radius:var(--r);padding:16px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}.res span{display:block;color:var(--on-navy-mut);font-size:.9rem}.res b{font:800 1.25rem var(--display)}.res .g b{color:var(--volt)}
+dialog{border:0;border-radius:14px;padding:0;width:min(560px,calc(100vw - 24px));max-height:88vh;background:var(--surface);color:var(--fg)}
+dialog::backdrop{background:rgba(6,14,22,.6)}
+dialog form{display:grid;gap:14px;padding:18px;grid-template-columns:minmax(0,1fr)}
+dialog .cb{display:flex;justify-content:space-between;align-items:center;gap:10px}
+dialog .lista{max-height:52vh;overflow-y:auto}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:11px 18px;border-radius:99px;font-weight:600;z-index:30;max-width:calc(100vw - 32px);text-align:center}
+</style>
+</head>
+<body>
+<header class="top"><img src="logo.png" alt="JDS Energy"><a class="btn pri min" href="#novo">Novo orçamento</a></header>
+<nav class="nav" id="nav" aria-label="Seções"></nav>
+<main id="main"></main>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status" hidden></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous" defer></script>
+<script src="dados.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
